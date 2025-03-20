@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StoneEater.io Game</title>
+    <title>StoneEater.io</title>
     <style>
         /* Basic styles for the game canvas and UI */
         body {
@@ -52,3 +52,61 @@
     <script src="confetti.js"></script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    #joystick {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 100px;
+      height: 100px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 50%;
+      touch-action: none;
+    }
+    #player {
+      width: 20px;
+      height: 20px;
+      background: blue;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <div id="player"></div>
+  <div id="joystick"></div>
+
+  <script>
+    const joystick = document.getElementById('joystick');
+    const player = document.getElementById('player');
+    let joystickOrigin = { x: 0, y: 0 };
+
+    joystick.addEventListener('touchstart', (event) => {
+      const rect = joystick.getBoundingClientRect();
+      joystickOrigin.x = rect.left + rect.width / 2;
+      joystickOrigin.y = rect.top + rect.height / 2;
+    });
+
+    joystick.addEventListener('touchmove', (event) => {
+      const touch = event.touches[0];
+      const dx = touch.clientX - joystickOrigin.x;
+      const dy = touch.clientY - joystickOrigin.y;
+
+      player.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+
+    joystick.addEventListener('touchend', () => {
+      player.style.transform = 'translate(-50%, -50%)';
+    });
+  </script>
+</body>
+</html>
+
